@@ -109,7 +109,7 @@ T = 760;
 k = 3.5 / 1000;
 Tw20 =15;
 dPg=0.1*Pgn;
-Tzero=60;
+Tzero=600;
 
 %% 4. Symulacja modelu (untitled1.slx)
 

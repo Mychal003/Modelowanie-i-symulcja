@@ -92,16 +92,6 @@ Temps = A \ B;
 Tl_eq = Temps(1);
 Tp_eq = Temps(2);
 
-% Symulacja obiektu
-simOut = sim("untitled.slx", 'StopTime', num2str(czas_symulacji));
-
-% Wyodrębnienie wyników symulacji
-TP_out = simOut.get('TP_out');
-czas_sim = simOut.tout;
-
-% Zapisanie wyników pierwszej symulacji do oddzielnych zmiennych
-TP_out_1 = TP_out;
-czas_sim_1 = czas_sim;
 
 
 %% Parametry modelu (Część 2)
@@ -115,10 +105,46 @@ Tzero=40;
 
 
 %% Lab 4
+
+% Parametry skoku i symulacji
+czasskok = 500;       % Czas skoku [s]
+czas_symulacji = 5000; % Czas symulacji [s]
+
+% Przypadek: Brak zmiany Tzew, zmiana Pg o 20%
+Tzew0 = TzewN;    % Temperatura zew. nominalna
+Pg0 = Pgn;        % Moc grzałki nominalna
+deltaTzew = 0;    % Brak zmiany temperatury zewnętrznej
+delta_Pg = 1.1;
+
+% Ponowne wyliczenie punktu równowagi dla danych wejściowych
+A = [ (Ksl + Ksw), -Ksw;
+      -Ksw,       (Ksp + Ksw) ];
+
+B = [ Pg0 + Ksl * Tzew0;
+      Ksp * Tzew0 ];
+
+Temps = A \ B;
+Tl_eq = Temps(1);
+Tp_eq = Temps(2);
+
+
+
+
+
 Kp=0.9*T/k*Tzero;
 Ti=0.33*Tzero;
 CV=Pgn;
 PV=Tw20;
-SP=Tw2;
+SP0 = Tzew0;
+dSP = 1;
+
+% Symulacja obiektu
+simOut = sim("untitled2.slx", 'StopTime', num2str(czas_symulacji));
+
+% Wyodrębnienie wyników symulacji
+TP_out = simOut.get('TP_out');
+czas_sim = simOut.tout;
 
 
+figure;
+plot(czas_sim, TP_out, 'b', 'LineWidth', 1);
