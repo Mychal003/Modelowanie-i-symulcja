@@ -65,7 +65,7 @@ end
 %% 4. Wybór jednego przypadku i symulacja
 
 % Parametry skoku i symulacji
-czasskok = 0;       % Czas skoku [s]
+czasskok = 500;       % Czas skoku [s]
 czas_symulacji = 5000; % Czas symulacji [s]
 
 % Przypadek: Brak zmiany Tzew, zmiana Pg o 20%
@@ -98,7 +98,7 @@ Tp_eq = Temps(2);
 T = 760;
 k = 3.5 / 1000;
 Tw20 =15;
-dPg=0.1*Pgn;
+%dPg=0.1*Pgn;
 Tzero=40;
 
 
@@ -114,7 +114,7 @@ czas_symulacji = 5000; % Czas symulacji [s]
 Tzew0 = TzewN;    % Temperatura zew. nominalna
 Pg0 = Pgn;        % Moc grzałki nominalna
 deltaTzew = 0;    % Brak zmiany temperatury zewnętrznej
-delta_Pg = 1.1;
+%delta_Pg = 1.1;
 
 % Ponowne wyliczenie punktu równowagi dla danych wejściowych
 A = [ (Ksl + Ksw), -Ksw;
@@ -131,11 +131,11 @@ Tp_eq = Temps(2);
 
 
 
-Kp=0.9*T/k*Tzero;
-Ti=0.33*Tzero;
+Kp=0.9*T/(k*Tzero);
+Ti=3.33*Tzero;
 CV=Pgn;
 PV=Tw20;
-SP0 = Tzew0;
+SP0 = Tp_eq;
 dSP = 1;
 
 % Symulacja obiektu
