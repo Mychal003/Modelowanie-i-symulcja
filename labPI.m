@@ -137,14 +137,66 @@ CV=Pgn;
 PV=Tw20;
 SP0 = Tp_eq;
 dSP = 1;
+deltaTzew = 0;
 
 % Symulacja obiektu
-simOut = sim("untitled2.slx", 'StopTime', num2str(czas_symulacji));
+%simOut = sim("untitled2.slx", 'StopTime', num2str(czas_symulacji));
 
 % Wyodrębnienie wyników symulacji
+%TP_out = simOut.get('TP_out');
+%czas_sim = simOut.tout;
+
+
+%figure;
+%plot(czas_sim, TP_out, 'b', 'LineWidth', 1);
+
+
+
+
+%% Parametry symulacji
+T = 760;
+k = 3.5 / 1000;
+Tw20 = 15;
+Tzero = 40;
+
+Kp = 0.9 * T / (k * Tzero);
+Ti = 3.33 * Tzero;
+CV = Pgn;
+
+%% Symulacja i wizualizacja
+
+% Parametry pierwszego przypadku
+dSP = 5;
+deltaTzew = 0;
+
+% Symulacja pierwszego przypadku
+assignin('base', 'dSP', dSP);
+assignin('base', 'deltaTzew', deltaTzew);
+simOut = sim("untitled2.slx", 'StopTime', '5000');
 TP_out = simOut.get('TP_out');
 czas_sim = simOut.tout;
 
-
+% Rysowanie pierwszego przypadku
 figure;
-plot(czas_sim, TP_out, 'b', 'LineWidth', 1);
+plot(czas_sim, TP_out, 'r', 'LineWidth', 1, 'DisplayName', 'dSP=5, \DeltaTzew=0');
+hold on;
+
+% Parametry drugiego przypadku
+dSP = 0;
+deltaTzew = 5;
+
+% Symulacja drugiego przypadku
+assignin('base', 'dSP', dSP);
+assignin('base', 'deltaTzew', deltaTzew);
+simOut = sim("untitled2.slx", 'StopTime', '5000');
+TP_out = simOut.get('TP_out');
+
+% Rysowanie drugiego przypadku
+plot(czas_sim, TP_out, 'b', 'LineWidth', 1, 'DisplayName', 'dSP=0, \DeltaTzew=5');
+
+% Konfiguracja wykresu
+xlabel('Czas [s]');
+ylabel('Temperatura [°C]');
+title('Porównanie przypadków symulacji');
+legend('show');
+grid on;
